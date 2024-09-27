@@ -826,9 +826,11 @@ def check_resume(
                 if fold.is_dir():
                     run_count += 1
             new_run_dir = Path(Path(log_dir) / f"run_{run_count}")
-            new_run_dir.mkdir()
+            if not new_run_dir.exists():
+                new_run_dir.mkdir()
             for _file in files_to_move:
-                move(str(_file), str(new_run_dir))
+                if _file.exists():
+                    move(str(_file), str(new_run_dir))
 
 
 def check_explicit_log_dir(
