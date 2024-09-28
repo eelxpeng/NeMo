@@ -827,10 +827,16 @@ def check_resume(
                     run_count += 1
             new_run_dir = Path(Path(log_dir) / f"run_{run_count}")
             if not new_run_dir.exists():
-                new_run_dir.mkdir()
+                try:
+                    new_run_dir.mkdir()
+                except:
+                    print(f"{str(new_run_dir)} already exists.")
             for _file in files_to_move:
                 if _file.exists():
-                    move(str(_file), str(new_run_dir))
+                    try:
+                        move(str(_file), str(new_run_dir))
+                    except:
+                        continue
 
 
 def check_explicit_log_dir(
